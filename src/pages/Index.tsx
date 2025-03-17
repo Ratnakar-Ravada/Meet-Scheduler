@@ -5,36 +5,48 @@ import InstantMeeting from '@/components/InstantMeeting';
 import ScheduledMeeting from '@/components/ScheduledMeeting';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
+import {fetchAuthSession} from '@/auth';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const Index = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [user, setUser] = useState(null);
 
   // Simulate authentication state
   useEffect(() => {
-    // In a real app, this would check the authentication status
-    // For demo purposes, we start as not authenticated
     const timer = setTimeout(() => {
       setShowAnimation(true);
-    }, 100);
-    
+    }, 1000);
+    (async () => {
+      const session = await fetchAuthSession();
+      if (session) {
+        setUser(session.user);
+        setIsAuthenticated(true);
+      }
+      else{
+        setIsAuthenticated(false);
+      }
+    })();
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSignIn = () => {
-    // Simulate sign in
-    setIsAuthenticated(true);
+  const handleSignIn = async () => {
+    window.location.href = 'http://localhost:3000/api/auth/signin';
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} user={user} />
       
       <main className="app-container">
         {isAuthenticated ? (
           <div className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${showAnimation ? 'animate-slide-up' : 'opacity-0'}`}>
             <InstantMeeting />
-            <ScheduledMeeting />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <ScheduledMeeting />
+            </LocalizationProvider>
           </div>
         ) : (
           <div className={`max-w-2xl mx-auto mt-16 text-center ${showAnimation ? 'animate-slide-up' : 'opacity-0'}`}>

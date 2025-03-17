@@ -9,14 +9,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { fetchAuthSession } from '@/auth';
 
-const AuthButton = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const AuthButton = ({ isAuthenticated, user }: { isAuthenticated: boolean; user: any }) => {
+  const handleAuth = async () => {
+    window.location.href = 'http://localhost:3000/api/auth/signin';
+  };
 
-  const handleAuth = () => {
-    // In a real app, this would trigger the NextAuth.js flow
-    // For now, we'll simulate authentication
-    setIsAuthenticated(!isAuthenticated);
+  const handleLogout = async () => {
+    window.location.href = 'http://localhost:3000/api/auth/signout';
   };
 
   if (isAuthenticated) {
@@ -25,7 +26,7 @@ const AuthButton = () => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="rounded-full p-0 h-10 w-10">
             <Avatar className="h-9 w-9 transition duration-300 hover:ring-2 hover:ring-primary/40">
-              <AvatarImage src="https://i.pravatar.cc/100" alt="User" />
+              <AvatarImage src={user?.image} alt="User" />
               <AvatarFallback className="bg-primary/10 text-primary">
                 <User size={18} />
               </AvatarFallback>
@@ -34,12 +35,12 @@ const AuthButton = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 mt-1 animate-fade-in">
           <div className="p-2 border-b">
-            <p className="font-medium">John Doe</p>
-            <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+            <p className="font-medium">{user?.name}</p>
+            <p className="text-sm text-muted-foreground">{user?.email}</p>
           </div>
           <DropdownMenuItem 
             className="cursor-pointer flex items-center text-destructive focus:text-destructive mt-1"
-            onClick={handleAuth}
+            onClick={handleLogout}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
