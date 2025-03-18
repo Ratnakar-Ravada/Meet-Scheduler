@@ -54,6 +54,7 @@ async function createGoogleEvent(
     requestBody: event,
   });
 
+  console.log(response);
   return response?.data;
 }
 
@@ -87,6 +88,7 @@ async function deleteGoogleEvent(accessToken, eventId) {
     },
   });
 
+  console.log(response);
   return response;
 }
 
@@ -112,6 +114,7 @@ export async function POST(req) {
     ).toISOString();
 
     const session = await getServerSession(authOptions);
+    console.log(session);
     if (!session) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -127,6 +130,7 @@ export async function POST(req) {
       attendees,
       timezone,
     });
+    console.log(result);
     if (!result?.hangoutLink || !result?.htmlLink || !result?.id) {
       return new Response(
         JSON.stringify({ error: "Failed to create the meeting link." }),
@@ -177,7 +181,7 @@ export async function DELETE(req) {
     }
     const accessToken = session.accessToken;
     const result = await deleteGoogleEvent(accessToken, eventId);
-
+    console.log(result);
     if (!result || result.status.toString() !== "204") {
       return new Response(
         JSON.stringify({ error: "Failed to delete the meeting." }),
