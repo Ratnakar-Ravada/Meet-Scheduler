@@ -4,7 +4,17 @@ export const fetchAuthSession = async () => {
   const response = await axios.get(
     `${process.env.NEXTAUTH_URL}/api/auth/session`,
     {
-      withCredentials: true, // <--- Required to send cookies
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Credentials": "true",
+      },
+      params: {
+        withCredentials: true,
+      },
     }
   );
 
