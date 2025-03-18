@@ -11,8 +11,8 @@
     "format": "prettier --write .",
     "dev:backend": "cd backend && dotenv -e .env.dev -- next dev --turbopack",
     "build:backend": "cd backend && dotenv -e .env.dev -- next build",
-    "dev:backend:prod": "cd backend && dotenv -e .env.dev -- next dev --turbopack --mode prod",
-    "build:backend:prod": "cd backend && dotenv -e .env.dev -- next build --mode prod",
+    "dev:backend:prod": "cd backend && dotenv -e .env -- next dev --turbopack",
+    "build:backend:prod": "cd backend && dotenv -e .env -- next build",
     "lint": "cd backend && next lint",
     "format:backend": "cd backend && prettier --write ."
   },
