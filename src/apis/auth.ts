@@ -1,17 +1,12 @@
 import axios from "axios";
 
+const client = axios.create({
+  baseURL: process.env.NEXTAUTH_URL,
+  withCredentials: true,
+});
+
 export const fetchAuthSession = async () => {
-  const response = await axios.get(
-    `${process.env.NEXTAUTH_URL}/api/auth/session`,
-    {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-      },
-    }
-  );
+  const response = await client.get("/api/auth/session");
 
   if (response && Object.keys(response.data).length > 0) {
     return response.data;

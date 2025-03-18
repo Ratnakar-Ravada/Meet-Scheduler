@@ -26,10 +26,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log(token);
       session.accessToken = token.accessToken as string;
       session.maxAge = token.maxAge as number;
-      console.log(session);
       return session;
     },
     async redirect() {
