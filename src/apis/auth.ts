@@ -3,6 +3,9 @@ import axios from "axios";
 const client = axios.create({
   baseURL: process.env.NEXTAUTH_URL,
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export const fetchAuthSession = async () => {
