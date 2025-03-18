@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,7 +54,7 @@
     --popover: 220 20% 14%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 216 100% 50%; 
+    --primary: 216 100% 50%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 14% 22%;
@@ -119,7 +118,7 @@
   .glass-card {
     @apply bg-white/90 backdrop-blur-lg border border-white/20 shadow-lg;
   }
-  
+
   .app-container {
     @apply max-w-6xl mx-auto px-4 sm:px-6 py-8;
   }
@@ -127,7 +126,7 @@
   .input-focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 transition duration-200;
   }
-  
+
   .button-hover {
     @apply hover:shadow-md transition duration-200 ease-in-out transform hover:-translate-y-0.5;
   }

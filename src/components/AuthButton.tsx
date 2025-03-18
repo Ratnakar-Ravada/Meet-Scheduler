@@ -1,23 +1,29 @@
-
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, LogOut } from 'lucide-react';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User, LogOut } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { fetchAuthSession } from '@/auth';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const AuthButton = ({ isAuthenticated, user }: { isAuthenticated: boolean; user: any }) => {
+const AuthButton = ({
+  loading,
+  isAuthenticated,
+  user,
+}: {
+  loading: boolean;
+  isAuthenticated: boolean;
+  user: any;
+}) => {
   const handleAuth = async () => {
-    window.location.href = 'http://localhost:3000/api/auth/signin';
+    window.location.href = "http://localhost:3000/api/auth/signin";
   };
 
   const handleLogout = async () => {
-    window.location.href = 'http://localhost:3000/api/auth/signout';
+    window.location.href = "http://localhost:3000/api/auth/signout";
   };
 
   if (isAuthenticated) {
@@ -38,7 +44,7 @@ const AuthButton = ({ isAuthenticated, user }: { isAuthenticated: boolean; user:
             <p className="font-medium">{user?.name}</p>
             <p className="text-sm text-muted-foreground">{user?.email}</p>
           </div>
-          <DropdownMenuItem 
+          <DropdownMenuItem
             className="cursor-pointer flex items-center text-destructive focus:text-destructive mt-1"
             onClick={handleLogout}
           >
@@ -49,16 +55,16 @@ const AuthButton = ({ isAuthenticated, user }: { isAuthenticated: boolean; user:
       </DropdownMenu>
     );
   }
-
-  return (
-    <Button 
-      onClick={handleAuth} 
-      className="button-hover"
-      size="sm"
-    >
-      Sign in with Google
-    </Button>
-  );
+  return <></>;
+  // return (
+  //   <Button
+  //     onClick={handleAuth}
+  //     className="button-hover"
+  //     size="sm"
+  //   >
+  //     Sign in with Google
+  //   </Button>
+  // );
 };
 
 export default AuthButton;

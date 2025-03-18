@@ -12,7 +12,9 @@
     "dev:backend": "cd backend && next dev --turbopack",
     "build:backend": "cd backend && next build",
     "start:backend": "cd backend && next start",
-    "lint:backend": "cd backend && next lint"
+    "lint:backend": "cd backend && next lint",
+    "format": "prettier --write ./src",
+    "format:backend": "cd backend && prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -79,10 +81,16 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "googleapis": "^146.0.0",
+    "moment-timezone": "^0.5.47",
     "postcss": "^8.4.47",
+    "prettier": "3.5.3",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
