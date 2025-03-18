@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 
 // Create Google Event
 async function createGoogleEvent(
@@ -13,7 +13,7 @@ async function createGoogleEvent(
     endDateTime,
     attendees,
     timezone,
-  },
+  }
 ) {
   // Setup Google Auth Client
   const oauth2Client = new google.auth.OAuth2({
@@ -108,7 +108,7 @@ export async function POST(req) {
       ? new Date(`${date} ${time}`).toISOString()
       : new Date(Date.now()).toISOString();
     const endDateTime = new Date(
-      new Date(startDateTime).getTime() + 60 * 60 * 1000,
+      new Date(startDateTime).getTime() + 60 * 60 * 1000
     ).toISOString();
 
     const session = await getServerSession(authOptions);
@@ -130,7 +130,7 @@ export async function POST(req) {
     if (!result?.hangoutLink || !result?.htmlLink || !result?.id) {
       return new Response(
         JSON.stringify({ error: "Failed to create the meeting link." }),
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -140,13 +140,13 @@ export async function POST(req) {
         calendarLink: result?.htmlLink,
         eventId: result?.id,
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Error creating meeting:", error);
     return new Response(
       JSON.stringify({ error: "Failed to create the meeting link." }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -181,7 +181,7 @@ export async function DELETE(req) {
     if (!result || result.status.toString() !== "204") {
       return new Response(
         JSON.stringify({ error: "Failed to delete the meeting." }),
-        { status: 500 },
+        { status: 500 }
       );
     }
     return new Response(JSON.stringify(result), { status: 200 });
@@ -189,7 +189,7 @@ export async function DELETE(req) {
     console.error("Error deleting meeting:", error);
     return new Response(
       JSON.stringify({ error: "Failed to delete the meeting." }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -231,7 +231,7 @@ async function listGoogleEvents(accessToken) {
       event.start = event.start.dateTime;
       event.end = event.end.dateTime;
       event.hangoutLink = event.conferenceData?.entryPoints?.find(
-        (point) => point.entryPointType === "video",
+        (point) => point.entryPointType === "video"
       )?.uri;
       eventList.push(event);
     }
