@@ -9,15 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const AuthButton = ({
-  loading,
-  isAuthenticated,
-  user,
-}: {
-  loading: boolean;
-  isAuthenticated: boolean;
-  user: any;
-}) => {
+const AuthButton = ({ loading, isAuthenticated, user }) => {
   const handleAuth = async () => {
     window.location.href = "http://localhost:3000/api/auth/signin";
   };
@@ -56,15 +48,6 @@ const AuthButton = ({
     );
   }
   return <></>;
-  // return (
-  //   <Button
-  //     onClick={handleAuth}
-  //     className="button-hover"
-  //     size="sm"
-  //   >
-  //     Sign in with Google
-  //   </Button>
-  // );
 };
 
 export default AuthButton;

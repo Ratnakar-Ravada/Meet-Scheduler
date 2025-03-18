@@ -4,7 +4,12 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
+  const env = loadEnv(mode === "prod" ? "prod" : "dev", process.cwd(), "");
+
+  // Assign env variables to process.env
+  for (const key in env) {
+    process.env[key] = env[key];
+  }
   return {
     server: {
       host: "::",
@@ -17,7 +22,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      "process.env.NEXTAUTH_URL": JSON.stringify(env.NEXTAUTH_URL),
+      "process.env": JSON.stringify(process.env),
     },
   };
 });
