@@ -12,9 +12,6 @@ export const fetchAuthSession = async () => {
         "Access-Control-Allow-Methods": "*",
         "Access-Control-Allow-Credentials": "true",
       },
-      params: {
-        withCredentials: true,
-      },
     }
   );
 
