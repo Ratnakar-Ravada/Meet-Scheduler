@@ -47,7 +47,7 @@ const Index = () => {
   }, []);
 
   const handleSignIn = async () => {
-    window.location.href = "http://localhost:3000/api/auth/signin";
+    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signin";
   };
 
   return (

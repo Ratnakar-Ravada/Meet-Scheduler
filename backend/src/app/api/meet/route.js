@@ -100,12 +100,12 @@ export async function POST(req) {
 
   try {
     const { date, time, timezone } = await req.json();
-    const summary = "Instant Google Meet";
+    const summary = "A Quick Call";
     const location = "Virtual (Google Meet)";
     const description = "Creating a meeting with Meet Scheduler Web App";
     const attendees = [];
     const startDateTime = date
-      ? new Date(`${date} ${time}`).toISOString()
+      ? new Date(`${date}T${time}:00Z`).toISOString()
       : new Date(Date.now()).toISOString();
     const endDateTime = new Date(
       new Date(startDateTime).getTime() + 60 * 60 * 1000
@@ -177,7 +177,7 @@ export async function DELETE(req) {
     }
     const accessToken = session.accessToken;
     const result = await deleteGoogleEvent(accessToken, eventId);
-    console.log(result, result.status);
+
     if (!result || result.status.toString() !== "204") {
       return new Response(
         JSON.stringify({ error: "Failed to delete the meeting." }),
@@ -214,7 +214,6 @@ async function listGoogleEvents(accessToken) {
     orderBy: "startTime",
   });
 
-  console.log(response);
   const events = response.data.items;
   const eventList = [];
   for (const event of events) {
@@ -255,7 +254,7 @@ export async function GET(req) {
     }
     const accessToken = session.accessToken;
     const events = await listGoogleEvents(accessToken);
-    console.log(events);
+
     return new Response(JSON.stringify(events), { status: 200 });
   } catch (error) {
     console.error("Error listing events:", error);

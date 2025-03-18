@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async redirect() {
-      return "http://localhost:8080";
+      return process.env.FRONTEND_URL as string;
     },
   },
 };

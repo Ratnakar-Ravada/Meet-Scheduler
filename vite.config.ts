@@ -4,8 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode === "prod" ? "prod" : "dev", process.cwd(), "");
-
+  const env = loadEnv(mode === "prod" ? ".env" : ".env.dev", process.cwd(), "");
   // Assign env variables to process.env
   for (const key in env) {
     process.env[key] = env[key];

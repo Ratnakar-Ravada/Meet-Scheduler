@@ -11,11 +11,11 @@ import {
 
 const AuthButton = ({ loading, isAuthenticated, user }) => {
   const handleAuth = async () => {
-    window.location.href = "http://localhost:3000/api/auth/signin";
+    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signin";
   };
 
   const handleLogout = async () => {
-    window.location.href = "http://localhost:3000/api/auth/signout";
+    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signout";
   };
 
   if (isAuthenticated) {

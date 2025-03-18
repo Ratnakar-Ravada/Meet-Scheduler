@@ -13,7 +13,7 @@ dayjs.extend(utc);
 const ScheduledMeeting = () => {
   const [meetingLink, setMeetingLink] = useState<string | undefined>(undefined);
   const [calendarLink, setCalendarLink] = useState<string | undefined>(
-    undefined,
+    undefined
   );
   const [isGenerating, setIsGenerating] = useState(false);
   const [formattedDateTime, setFormattedDateTime] = useState<
@@ -34,14 +34,16 @@ const ScheduledMeeting = () => {
       .set("minute", time.minute());
     setIsGenerating(true);
 
-    const formattedDate = scheduledDate.format("DD-MMM-YYYY");
+    const formattedDate = scheduledDate.format("YYYY-MM-DD");
     const formattedTime = scheduledDate.format("HH:mm");
-    setFormattedDateTime(`${formattedDate} at ${formattedTime} (UTC GMT+0)`);
+    setFormattedDateTime(
+      `${scheduledDate.format("DD-MMM-YYYY")} at ${formattedTime} (UTC GMT+0)`
+    );
 
     const { meetURL, calendarURL, eventId } = await createGoogleEvent(
       formattedDate,
       formattedTime,
-      "UTC",
+      "Etc/UTC"
     );
     if (meetURL && calendarURL && eventId) {
       setMeetingLink(meetURL);

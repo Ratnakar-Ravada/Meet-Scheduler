@@ -3,7 +3,7 @@ import axios from "axios";
 export const createGoogleEvent = async (
   date = null,
   time = null,
-  timezone = "UTC",
+  timezone = "Etc/UTC"
 ) => {
   try {
     const response = await axios.post(
@@ -13,7 +13,7 @@ export const createGoogleEvent = async (
         time,
         timezone,
       },
-      { withCredentials: true },
+      { withCredentials: true }
     );
     if (
       response &&
@@ -43,7 +43,7 @@ export const deleteGoogleEvent = async (eventId) => {
       {
         data: { eventId: decodeURIComponent(eventId) },
         withCredentials: true, // Body goes in `data` for Axios DELETE
-      },
+      }
     );
     console.log("Meeting and Calendar Event deleted successfully.");
     return response.data;
