@@ -20,7 +20,7 @@ const ScheduledMeeting = () => {
     string | undefined
   >(undefined);
   const [date, setDate] = useState(dayjs().utc());
-  const [time, setTime] = useState(dayjs().utc());
+  const [time, setTime] = useState(dayjs().utc().add(1, "minute"));
   const [eventId, setEventId] = useState<string | undefined>(undefined);
 
   const handleCreateMeeting = async () => {
@@ -112,6 +112,9 @@ const ScheduledMeeting = () => {
 
           <div className="space-y-2">
             <MobileTimePicker
+              minTime={
+                date.isSame(dayjs().utc(), "day") ? dayjs().utc() : undefined
+              }
               disablePast={date.isSame(dayjs().utc(), "day")}
               defaultValue={time}
               onChange={(newValue) => setTime(dayjs.utc(newValue))}

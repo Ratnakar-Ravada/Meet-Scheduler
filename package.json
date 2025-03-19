@@ -7,7 +7,7 @@
     "dev:frontend": "vite --mode dev",
     "build:frontend": "vite build --mode dev",
     "dev:frontend:prod": "vite --mode prod",
-    "build:prod": "vite build --mode prod && cd backend && dotenv -e .env -- next build",
+    "build:frontend:prod": "vite build --mode prod",
     "format": "prettier --write .",
     "dev:backend": "cd backend && dotenv -e .env.dev -- next dev --turbopack",
     "build:backend": "cd backend && dotenv -e .env.dev -- next build",

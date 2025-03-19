@@ -55,15 +55,23 @@ const Index = () => {
       <Navbar loading={loading} isAuthenticated={isAuthenticated} user={user} />
 
       <main className="app-container">
-        {isAuthenticated ? (
-          <div
-            className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${showAnimation ? "animate-slide-up" : "opacity-0"}`}
-          >
-            <InstantMeeting />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <ScheduledMeeting />
-            </LocalizationProvider>
-          </div>
+        {isAuthenticated && user ? (
+          <>
+            <div className="text-left p-4">
+              <h1 className="text-2xl font-bold">Welcome, {user.name}! 👋</h1>
+              <p className="text-lg text-muted-foreground">
+                "Plan your day with ease — meetings made simpler!"
+              </p>
+            </div>
+            <div
+              className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${showAnimation ? "animate-slide-up" : "opacity-0"}`}
+            >
+              <InstantMeeting />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <ScheduledMeeting />
+              </LocalizationProvider>
+            </div>
+          </>
         ) : loading ? (
           <LoadingScreen />
         ) : (
