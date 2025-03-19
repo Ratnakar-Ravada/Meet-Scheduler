@@ -49,8 +49,9 @@ export const authOptions: NextAuthOptions = {
       options: {
         httpOnly: true,
         sameSite: "lax",
-        secure: true,
+        secure: false,
         path: "/",
+        domain: process.env.NEXTAUTH_URL,
       },
     },
   },
