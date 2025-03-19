@@ -2,6 +2,7 @@
 
 A simple and user-friendly interface for scheduling meetings with Google Calendar using Next.js (App Router), NextAuth.js for Google SSO authentication, and a React + Vite frontend styled with Tailwind CSS.
 
+Live link: Deployed on Vercel - https://meet-scheduler-mvp.vercel.app/
 ## Project Structure
 
 - **Frontend:** Located in the root directory (React + Vite)
