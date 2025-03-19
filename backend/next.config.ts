@@ -6,7 +6,7 @@ module.exports = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: process.env.FRONTEND_URL,
+            value: process.env.FRONTEND_URL || "*",
           },
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
