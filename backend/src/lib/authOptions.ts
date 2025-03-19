@@ -19,11 +19,15 @@ export const authOptions: NextAuthOptions = {
   ],
   debug: true,
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, trigger, session }) {
       if (account) {
         token.accessToken = account.access_token;
       }
-      token.maxAge = 24 * 60 * 60; // 24 hours
+      token.maxAge = 24 * 60 * 60;
+      if (trigger === "update" && session) {
+        token = { ...token, user: session };
+        return token;
+      }
       return token;
     },
     async session({ session, token }) {
