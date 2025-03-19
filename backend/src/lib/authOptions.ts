@@ -48,7 +48,6 @@ export const authOptions: NextAuthOptions = {
         path: "/",
         sameSite: "none",
         secure: true,
-        domain: process.env.FRONTEND_URL,
       },
     },
   },
