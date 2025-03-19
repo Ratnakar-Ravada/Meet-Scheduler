@@ -2,6 +2,7 @@
 
 A simple and user-friendly interface for scheduling meetings with Google Calendar using Next.js (App Router), NextAuth.js for Google SSO authentication, and a React + Vite frontend styled with Tailwind CSS.
 
+Live link: Deployed on Vercel - https://meet-scheduler-mvp.vercel.app/
 ## Project Structure
 
 - **Frontend:** Located in the root directory (React + Vite)
@@ -116,6 +117,16 @@ npm run build:backend:prod
 5. Set Output Directory: `/backend/.next`
 6. Deploy
 7. Set the deployed domain as `NEXTAUTH_URL` in your `.env` files
+
+## Limitations
+
+In the OAuth Consent screen you may see something like this
+```
+Google hasn’t verified this app
+The app is requesting access to sensitive info in your Google Account. Until the developer (ratnakarravada11@gmail.com) verifies this app with Google, you shouldn't use it.
+```
+
+This web application is intended solely for development purposes. As I currently do not possess a valid public domain to verify the Google Client App, this assumption is made. To proceed, you may need to continue with the insecure URL and provide your consent. Please note that you can revoke your consent at any time through your Google Account settings. Once consent is granted, you will not need to provide it again unless you manually revoke it from your Google Account.
 
 ## Future Scope
 
