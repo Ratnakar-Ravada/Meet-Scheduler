@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  debug: true,
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -26,6 +27,14 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log(
+        `[SESSION CALLBACK] Session Data:`,
+        JSON.stringify(session, null, 2)
+      );
+      console.log(
+        `[SESSION CALLBACK] Token Data:`,
+        JSON.stringify(token, null, 2)
+      );
       session.accessToken = token.accessToken as string;
       session.maxAge = token.maxAge as number;
       return session;
@@ -40,7 +49,8 @@ export const authOptions: NextAuthOptions = {
       options: {
         httpOnly: true,
         sameSite: "lax",
-        secure: true, // Ensures cookies are sent only over HTTPS in production
+        secure: true,
+        path: "/",
       },
     },
   },
