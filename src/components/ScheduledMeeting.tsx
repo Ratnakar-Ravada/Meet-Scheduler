@@ -10,7 +10,7 @@ import { createGoogleEvent, deleteGoogleEvent } from "@/apis/meet";
 
 dayjs.extend(utc);
 
-const ScheduledMeeting = () => {
+const ScheduledMeeting = ({ hasConsent }) => {
   const [meetingLink, setMeetingLink] = useState<string | undefined>(undefined);
   const [calendarLink, setCalendarLink] = useState<string | undefined>(
     undefined
@@ -95,6 +95,7 @@ const ScheduledMeeting = () => {
           <div className="space-y-2">
             <MobileDatePicker
               disablePast
+              disabled={!hasConsent}
               views={["year", "month", "day"]}
               value={date}
               onChange={(newValue) => setDate(dayjs.utc(newValue))}
@@ -115,6 +116,7 @@ const ScheduledMeeting = () => {
               minTime={
                 date.isSame(dayjs().utc(), "day") ? dayjs().utc() : undefined
               }
+              disabled={!hasConsent}
               disablePast={date.isSame(dayjs().utc(), "day")}
               defaultValue={time}
               onChange={(newValue) => setTime(dayjs.utc(newValue))}
@@ -134,6 +136,7 @@ const ScheduledMeeting = () => {
 
           <Button
             onClick={handleCreateMeeting}
+            disabled={!hasConsent}
             className="w-full button-hover mt-4"
           >
             <CalendarCheck className="mr-2 h-4 w-4" />

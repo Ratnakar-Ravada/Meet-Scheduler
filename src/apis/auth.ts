@@ -17,3 +17,23 @@ export const fetchAuthSession = async () => {
     return null;
   }
 };
+
+export const handleAuth = async () => {
+  window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signin";
+};
+
+// export const handleRequestAdditionalScopes = async () => {
+//   try {
+//     const response = await client.get("/api/addScopes");
+//     const data = await response.data;
+//     console.log(data);
+//     // Redirect user to Google's consent screen for additional scopes
+//     window.location.href = data.authUrl;
+//   } catch (error) {
+//     console.error("Error requesting additional scopes:", error);
+//   }
+// };
+
+export const handleLogout = async () => {
+  window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signout";
+};

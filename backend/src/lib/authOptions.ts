@@ -1,10 +1,33 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+interface TokenInfoResponse {
+  scope?: string;
+  [key: string]: string | number | undefined;
+}
+
+// Fetch user scopes from Google's token introspection endpoint
+async function fetchUserInfo(accessToken: string): Promise<string[]> {
+  const response = await fetch(
+    `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
+  );
+  const data: TokenInfoResponse = await response.json();
+  return data.scope ? data.scope.split(" ") : [];
+}
+
+// Check for missing scopes and return them
+async function getMissingScopes(
+  accessToken: string,
+  requiredScopes: string[]
+): Promise<string[]> {
+  const userScopes = await fetchUserInfo(accessToken);
+  return requiredScopes.filter((scope) => !userScopes.includes(scope));
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string, // Ensure type safety for environment variables
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       authorization: {
         params: {
@@ -17,7 +40,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  debug: true,
+  debug: process.env.NEXT_APP_ENV === "dev",
   callbacks: {
     async jwt({ token, account, trigger, session }) {
       if (account) {
@@ -30,11 +53,26 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
+
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
       session.maxAge = token.maxAge as number;
+
+      const requiredScopes = [
+        "https://www.googleapis.com/auth/calendar.events",
+        "https://www.googleapis.com/auth/calendar",
+      ];
+
+      const missingScopes = await getMissingScopes(
+        token.accessToken as string,
+        requiredScopes
+      );
+
+      session.hasConsent = missingScopes.length === 0;
+      session.missingScopes = missingScopes; // Send missing scopes in session
       return session;
     },
+
     async redirect() {
       return process.env.FRONTEND_URL as string;
     },

@@ -14,7 +14,7 @@ const generateMeetLink = async () => {
   return { meetLink: null, calendarLink: null, eventId: null };
 };
 
-const InstantMeeting = () => {
+const InstantMeeting = ({hasConsent}) => {
   const [meetingLink, setMeetingLink] = useState<string | undefined>(undefined);
   const [calendarLink, setCalendarLink] = useState<string | undefined>(
     undefined,
@@ -73,6 +73,7 @@ const InstantMeeting = () => {
         <div className="flex flex-col items-center justify-center py-6">
           <Button
             onClick={handleCreateMeeting}
+            disabled={!hasConsent}
             className="px-6 button-hover flex items-center gap-2 mt-2 mb-1"
             size="lg"
           >

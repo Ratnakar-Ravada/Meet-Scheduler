@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, LogOut } from "lucide-react";
@@ -8,16 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { handleLogout } from "@/apis/auth";
 
 const AuthButton = ({ loading, isAuthenticated, user }) => {
-  const handleAuth = async () => {
-    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signin";
-  };
-
-  const handleLogout = async () => {
-    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signout";
-  };
-
   if (isAuthenticated) {
     return (
       <DropdownMenu>
@@ -31,18 +23,24 @@ const AuthButton = ({ loading, isAuthenticated, user }) => {
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent align="end" className="w-56 mt-1 animate-fade-in">
-          <div className="p-2 border-b">
-            <p className="font-medium">{user?.name}</p>
-            <p className="text-sm text-muted-foreground">{user?.email}</p>
+          <div className="w-25 p-2 border-b">
+            <p className="font-medium truncate">{user?.name}</p>
+            <p className="text-sm text-muted-foreground truncate">
+              {user?.email}
+            </p>
           </div>
-          <DropdownMenuItem
-            className="cursor-pointer flex items-center text-destructive focus:text-destructive mt-1"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-          </DropdownMenuItem>
+
+          <div className="flex justify-center py-2">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-300 shadow-none outline-none"
+            >
+              <LogOut className="h-5 w-5" />
+              <span className="text-white text-sm font-medium">Log out</span>
+            </button>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     );

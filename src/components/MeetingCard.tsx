@@ -46,7 +46,7 @@ const MeetingCard = ({
     <Card
       className={cn(
         "w-full overflow-hidden animate-fade-in shadow-sm relative",
-        className,
+        className
       )}
     >
       {meetingLink && (

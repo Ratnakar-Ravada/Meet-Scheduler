@@ -4,9 +4,10 @@ import InstantMeeting from "@/components/InstantMeeting";
 import ScheduledMeeting from "@/components/ScheduledMeeting";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
-import { fetchAuthSession } from "@/apis/auth";
+import { fetchAuthSession, handleAuth } from "@/apis/auth";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import ConsentWarning from "@/components/ConsentWarning";
 
 const LoadingScreen = () => (
   <div className="h-[60vh] w-full flex flex-col items-center justify-center space-y-2">
@@ -27,6 +28,7 @@ const Index = () => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [hasConsent, setHasConsent] = useState(false);
 
   useEffect(() => {
     setShowAnimation(true);
@@ -35,6 +37,7 @@ const Index = () => {
       const session = await fetchAuthSession();
       if (session) {
         setUser(session.user);
+        setHasConsent(session.hasConsent);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
@@ -46,15 +49,12 @@ const Index = () => {
     };
   }, []);
 
-  const handleSignIn = async () => {
-    window.location.href = process.env.NEXTAUTH_URL + "/api/auth/signin";
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 overflow-hidden">
       <Navbar loading={loading} isAuthenticated={isAuthenticated} user={user} />
-
       <main className="app-container">
+        {isAuthenticated && !hasConsent && !loading && <ConsentWarning />}
+
         {isAuthenticated && user ? (
           <>
             <div className="text-left p-4">
@@ -66,9 +66,9 @@ const Index = () => {
             <div
               className={`mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 ${showAnimation ? "animate-slide-up" : "opacity-0"}`}
             >
-              <InstantMeeting />
+              <InstantMeeting hasConsent={hasConsent} />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <ScheduledMeeting />
+                <ScheduledMeeting hasConsent={hasConsent} />
               </LocalizationProvider>
             </div>
           </>
@@ -89,7 +89,7 @@ const Index = () => {
             <div className="mb-12 mt-8">
               <Button
                 size="lg"
-                onClick={handleSignIn}
+                onClick={handleAuth}
                 className="button-hover px-8 py-6 text-lg shadow-lg shadow-primary/10 bg-primary"
               >
                 Sign in to get started
