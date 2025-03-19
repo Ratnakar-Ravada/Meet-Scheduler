@@ -39,4 +39,17 @@ export const authOptions: NextAuthOptions = {
       return process.env.FRONTEND_URL as string;
     },
   },
+  useSecureCookies: true,
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        path: "/",
+        sameSite: "none",
+        secure: true,
+        domain: process.env.FRONTEND_URL,
+      },
+    },
+  },
 };
