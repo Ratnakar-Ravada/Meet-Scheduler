@@ -34,21 +34,4 @@ export const authOptions: NextAuthOptions = {
       return process.env.FRONTEND_URL as string;
     },
   },
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NEXT_APP_ENV === "prod", // Critical for HTTPS in Vercel
-        domain: ".vercel.app", // Allow cookies across subdomains
-        path: "/",
-      },
-    },
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  secret: process.env.NEXTAUTH_SECRET,
 };
