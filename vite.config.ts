@@ -15,13 +15,6 @@ export default defineConfig(({ mode }) => {
     server: {
       host: "::",
       port: 8080,
-      proxy: {
-        "/api": {
-          target: process.env.API_URL,
-          changeOrigin: true,
-          secure: false,
-        },
-      },
     },
     plugins: [react()],
     resolve: {
