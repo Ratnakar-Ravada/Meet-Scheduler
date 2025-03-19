@@ -47,8 +47,8 @@ export const authOptions: NextAuthOptions = {
     sessionToken: {
       name: "next-auth.session-token",
       options: {
-        httpOnly: true,
-        sameSite: "lax",
+        httpOnly: false,
+        sameSite: "none",
         secure: false,
         path: "/",
         domain: process.env.NEXTAUTH_URL,
