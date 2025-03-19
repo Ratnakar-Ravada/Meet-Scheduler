@@ -21,22 +21,5 @@ module.exports = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "/backend/api/:path*",
-      },
-    ];
-  },
-  async redirects() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "/backend/api/:path*",
-        permanent: true,
-      },
-    ];
-  },
   output: "standalone",
 };
