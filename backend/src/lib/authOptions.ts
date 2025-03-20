@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           scope:
-            "openid email profile https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar",
+            "openid email profile https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/meetings.space.created https://www.googleapis.com/auth/meetings.space.settings",
           access_type: "offline",
           include_granted_scopes: "true",
           response_type: "code",
@@ -61,6 +61,8 @@ export const authOptions: NextAuthOptions = {
       const requiredScopes = [
         "https://www.googleapis.com/auth/calendar.events",
         "https://www.googleapis.com/auth/calendar",
+        "https://www.googleapis.com/auth/meetings.space.created",
+        "https://www.googleapis.com/auth/meetings.space.settings",
       ];
 
       const missingScopes = await getMissingScopes(

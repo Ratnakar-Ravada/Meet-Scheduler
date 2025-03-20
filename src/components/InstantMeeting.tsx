@@ -2,62 +2,55 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import MeetingCard from "./MeetingCard";
 import { Video } from "lucide-react";
-import { createGoogleEvent, deleteGoogleEvent } from "@/apis/meet";
+import { createInstantMeeting, endGoogleMeetMeeting } from "@/apis/meet";
 import { toast } from "sonner";
 
 // Function to generate a random Google Meet-like link
 const generateMeetLink = async () => {
-  const { meetURL, calendarURL, eventId } = await createGoogleEvent();
-  if (meetURL && calendarURL && eventId) {
-    return { meetLink: meetURL, calendarLink: calendarURL, eventId: eventId };
+  const { meetUrl, name } = await createInstantMeeting();
+  if (meetUrl && name) {
+    return { meetLink: meetUrl, meetName: name };
   }
-  return { meetLink: null, calendarLink: null, eventId: null };
+  return { meetLink: null, meetName: null };
 };
 
-const InstantMeeting = ({hasConsent}) => {
+const InstantMeeting = ({ hasConsent }) => {
   const [meetingLink, setMeetingLink] = useState<string | undefined>(undefined);
-  const [calendarLink, setCalendarLink] = useState<string | undefined>(
-    undefined,
-  );
   const [isGenerating, setIsGenerating] = useState(false);
-  const [eventId, setEventId] = useState<string | undefined>(undefined);
+  const [meetName, setMeetName] = useState<string | undefined>(undefined);
 
   const handleCreateMeeting = async () => {
     setIsGenerating(true);
     // Simulate API call delay
-    const { meetLink, calendarLink, eventId } = await generateMeetLink();
-    if (meetLink && calendarLink && eventId) {
+    const { meetLink, meetName } = await generateMeetLink();
+    if (meetLink && meetName) {
       setMeetingLink(meetLink);
-      setCalendarLink(calendarLink);
-      setEventId(eventId);
+      setMeetName(meetName);
     } else {
-      setMeetingLink(null);
-      setCalendarLink(null);
-      setEventId(null);
-      toast.error("Failed to create meeting");
+      toast.error("Login expired. Please log in again.");
     }
     setIsGenerating(false);
   };
 
   const handleResetMeetingCard = () => {
     setMeetingLink(undefined);
-    setCalendarLink(undefined);
-    setEventId(undefined);
+    setMeetName(undefined);
     setIsGenerating(false);
   };
 
   const handleDeleteMeeting = async () => {
-    if (!eventId) {
-      toast.error("No event found to delete.");
+    if (!meetName) {
+      toast.error("Failed to delete meeting");
       return;
     }
-    const response = await deleteGoogleEvent(eventId);
-    if (response) {
-      toast.success("Meeting and Calendar Event deleted successfully.");
-      handleResetMeetingCard();
-    } else {
-      toast.error("Could not delete the event. Please try again.");
+    const result = await endGoogleMeetMeeting(meetName);
+
+    if (!result || result.status !== 200) {
+      toast.error("Failed to delete meeting");
+      return;
     }
+    toast.success("Meeting deleted successfully");
+    handleResetMeetingCard();
   };
 
   return (
@@ -65,7 +58,6 @@ const InstantMeeting = ({hasConsent}) => {
       title="Instant Meeting"
       description="Create a meeting and join immediately"
       meetingLink={meetingLink}
-      calendarLink={calendarLink}
       isGenerating={isGenerating}
       onDelete={handleDeleteMeeting}
     >

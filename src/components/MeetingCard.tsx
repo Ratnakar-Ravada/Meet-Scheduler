@@ -8,7 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Copy, ExternalLink, Trash, Calendar, Video } from "lucide-react";
+import {
+  Copy,
+  ExternalLink,
+  Trash,
+  RefreshCcw,
+  Calendar,
+  Video,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -28,7 +35,7 @@ const MeetingCard = ({
   title,
   description,
   meetingLink,
-  calendarLink,
+  calendarLink = "",
   meetingTime,
   className,
   children,
@@ -55,7 +62,7 @@ const MeetingCard = ({
           size="icon"
           onClick={onDelete}
           className="absolute top-2 right-2"
-          title="Delete Event"
+          title={calendarLink ? "Delete Event" : "End Meeting"}
         >
           <Trash className="h-5 w-5" />
         </Button>
@@ -113,22 +120,24 @@ const MeetingCard = ({
 
       {meetingLink && (
         <CardFooter className="pt-2 flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full button-hover"
-            asChild
-          >
-            <a
-              href={calendarLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center"
+          {calendarLink && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full button-hover"
+              asChild
             >
-              <Calendar className="mr-2 h-4 w-4" />
-              View on Calendar
-            </a>
-          </Button>
+              <a
+                href={calendarLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center"
+              >
+                <Calendar className="mr-2 h-4 w-4" />
+                View on Calendar
+              </a>
+            </Button>
+          )}
           <Button
             variant="outline"
             size="sm"
