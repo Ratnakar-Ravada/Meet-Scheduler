@@ -3,6 +3,7 @@
 A simple and user-friendly interface for scheduling meetings with Google Calendar using Next.js (App Router), NextAuth.js for Google SSO authentication, and a React + Vite frontend styled with Tailwind CSS.
 
 Live link: Deployed on Vercel - https://meet-scheduler-mvp.vercel.app/
+
 ## Project Structure
 
 - **Frontend:** Located in the root directory (React + Vite)
@@ -15,8 +16,9 @@ Live link: Deployed on Vercel - https://meet-scheduler-mvp.vercel.app/
 
    - Create a project in Google Cloud Console
    - Create an **OAuth 2.0 Client ID** with a redirect URI: `${NEXTAUTH_URL}/api/auth/callback/google`
-   - Create a **Google API Key** for Calendar events
-   - Add both `Client ID` and `Client Secret` to `.env.dev`
+   - Create a **Google API Key** and add it to `.env.dev` file
+   - Add both `Client ID` and `Client Secret` to `.env.dev` file
+   - Add Google Meet and Google Calendar Apps in the APIs & Services Tab in Google Cloud Platform.
 
 2. **Domain Verification for Production**
    - For trusted API usage in production, verify your domain in Google Cloud Console.
@@ -121,6 +123,7 @@ npm run build:backend:prod
 ## Limitations
 
 In the OAuth Consent screen you may see something like this
+
 ```
 Google hasn’t verified this app
 The app is requesting access to sensitive info in your Google Account. Until the developer (ratnakarravada11@gmail.com) verifies this app with Google, you shouldn't use it.
